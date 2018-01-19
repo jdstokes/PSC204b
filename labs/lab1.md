@@ -1,6 +1,6 @@
 # PSC204b
 ## Labs
-* [Lab 1](/labs/lab1.md)
+* [Lab 1](/references/TourTF.pdf)
 ## Resources
 
 
