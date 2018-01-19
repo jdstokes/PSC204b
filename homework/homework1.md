@@ -7,8 +7,7 @@ Homework 1
 
 $\sum_{i=1}^N w_i(x_i - \mu)^2$
 
-*e*<sup>*i**π*</sup> = −1
- a: 0.1471
+a: 0.1471
 
 b: 0.300
 
