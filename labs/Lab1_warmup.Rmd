@@ -1,6 +1,6 @@
 ---
 title: "Lab1 warmup"
-output: html_notebook
+output: github_document
 ---
 
 We will try to reproduce some statistics from [A Statistical Analysis of the Work of Bob Ross](https://fivethirtyeight.com/features/a-statistical-analysis-of-the-work-of-bob-ross/) to demonstrate, that even basic knowledge of R will allow you to replicate world renown stats site data :)
