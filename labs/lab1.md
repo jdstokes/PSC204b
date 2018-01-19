@@ -1,7 +1,7 @@
-# PSC204b
-## Labs
-* [Lab 1](/references/TourTF.pdf)
-## Resources
+# PSC204b Lab 1
+* Homework
+* Practice
+* Future topics
 
 
 
