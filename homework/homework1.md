@@ -1,19 +1,14 @@
 Homework 1
 ================
 
-**1. Consider the data set given below**
-
-x &lt;- c(0.18, -1.54, 0.42, 0.95)
-
-And weights given by
-
-w &lt;- c(2, 1, 3, 1)
+**1. Consider the data set given below** x &lt;- c(0.18, -1.54, 0.42, 0.95) And weights given by w &lt;- c(2, 1, 3, 1)
 
 **Give the value (a, b, c, or d) that minimizes the least squares equation **
 
-**$\\sum\_{i=1}^N w\_i(x\_i - \\mu)^2$**
+$\sum_{i=1}^N w_i(x_i - \mu)^2$
 
-a: 0.1471
+*e*<sup>*i**π*</sup> = −1
+ a: 0.1471
 
 b: 0.300
 
