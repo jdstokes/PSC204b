@@ -1,0 +1,187 @@
+---
+title: "PSC204b Lab 1"
+output: html_notebook
+---
+
+
+
+
+```{r underfit_plot}
+plot(y~x,data = df,
+     xlab = "X",
+     ylab = "Y",
+     main = "Y vs X",
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+underfit_model = lm(y ~ 1, data = df)
+abline(underfit_model, lwd = 3, col = "darkorange")
+```
+
+```{r}
+Sxy = sum((x - mean(x)) * (y - mean(y)))
+Sxx = sum((x - mean(x)) ^ 2)
+Syy = sum((y - mean(y)) ^ 2)
+c(Sxy, Sxx, Syy)
+```
+```{r}
+beta_1_hat = Sxy / Sxx
+beta_0_hat = mean(y) - beta_1_hat * mean(x)
+c(beta_0_hat, beta_1_hat)
+```
+
+```{r}
+model <- lm(y~x)
+model
+```
+
+```{r}
+plot(y~x,data = df,
+     xlab = "X",
+     ylab = "Y",
+     main = "Y vs X",
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+linear_model = lm(y ~ x)
+abline(linear_model, lwd = 3, col = "darkorange")
+```
+
+3. From the datasets package ‘mtcars’, fit the regression model with mpg as the outcome and weight (wt) and horsepower (hp) as the predictor. Use the matrix notation  , give the slope coefficient and adjusted  as R output
+
+```{r}
+x0 <- c(1,1,1,1,1,1,1,1,1,1)
+Y = as.matrix(y)
+X = as.matrix(cbind(x0,x))
+beta <- solve(t(X) %*%) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Overview
+-----------------------------------------------------------------------------
+
+####**Fitting classical and multilevel regressions in R**
+
+Linear models: lm()
+
+Generalized linear models: glm()
+
+Multilevel modeling: lmer()
+
+```{r}
+library('lme4')
+
+
+head(imm10)
+tmp <- by(imm10, imm10$schnum, function(x) lm(math ~ homework, data=x))
+tmat<-t(sapply(tmp,coef))
+tmat
+
+```
+
+RStan
+-----------------------------------------------------------------------------
+
+####**RStan**
+
+```{r}
+library('rstan')
+
+```
+
+As the startup message says, if you are using rstan locally on a multicore machine and have plenty of RAM to estimate your model in parallel, at this point execute
+
+
+```{r}
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+```
+
+
+
+Markov chains
+-----------------------------------------------------------------------------
+ Markov chain is used to sample from a target distribution. 
+
+
+
+
+
+Probability and Statistics
+-----------------------------------------------------------------------------
+
+```{r}
+#install.packages('alr3')
+#gelibrary(alr3)
+# setwd("/Users/jdstokes/Downloads/psc204b/R")
+data <- read.csv("/Users/jdstokes/Downloads/psc204b/R/gender-height-weight.csv",header=T)
+```
+The Central Limit Theorem holds in practice—that is, Pn i=1 zi actually follows an approximate normal distribution—if the individual σ 2 zi ’s are small compared to the total variance σ 2 z . For example, the heights of women in the United States follow an approximate normal distribution. The Central Limit Theorem applies here because height is affected by many small additive factors. In contrast, the distribution of heights of all adults in the United States is not so close to normality. The Central Limit Theorem does not apply here because there is a single large factor—sex—that represents much of the total variation. See
+
+Gelman, Andrew; Hill, Jennifer. Data Analysis Using Regression and Multilevel/Hierarchical Models (Analytical Methods for Social Research) (Page 14). Cambridge University Press. Kindle Edition. 
+```{r}
+library(dplyr)
+library(ggplot2)
+head(data)
+# df.male = filter(data,Gender=="Male")
+data %>%
+  select(Height)%>%
+  ggplot(aes(Height)) +
+  geom_density() +
+  ggtitle("All")
+
+
+data %>%
+  filter(Gender=="Male")%>%
+  select(Height)%>%
+  ggplot(aes(Height)) +
+  geom_density() +
+  ggtitle("Male")
+
+data %>%
+  filter(Gender=="Female")%>%
+  select(Height)%>%
+  ggplot(aes(Height)) +
+  geom_density()+
+  ggtitle("Female")
+
+ggplot(data, aes(x=Height,fill=Gender)) + geom_density(alpha=0.25)
+
+
+summarise(data, mean=mean(Height), sd=sd(Height))
+grouped <- group_by(data, Gender)
+summarise(grouped, mean=mean(Height), sd=sd(Height))
+
+```
+
+
+**Linear transformations** 
+
+Linearly transformed normal distributions are still normal
+
+```{r}
+
+```
+
+
+**Means and variances of sums of ocrrelated random variables**
+
+

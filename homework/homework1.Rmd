@@ -1,29 +1,42 @@
 ---
 title: "Homework 1"
-output: github_document
+output: html_notebook
 editor_options: 
 chunk_output_type: inline
 ---
 
-**1. Consider the data set given below**
+[Question 1](#question-1)  
+[Question 2](#question-2)  
+[Question 3](#question-3)  
+[Question 4](#question-4)  
+[Question 5](#question-5)  
+[Question 6](#question-6)  
+[Question 7](#question-7)  
+[Bonus 1](#bonus-1)  
+[Bonus 2](#bonus-2)  
+
+### Question 1
+
+Consider the data set given below:
+
 x <- c(0.18, -1.54, 0.42, 0.95)
+
 And weights given by
+
 w <- c(2, 1, 3, 1)
 
-**Give the value  (a, b, c, or d) that minimizes the least squares equation **
+Give the value  (a, b, c, or d) that minimizes the least squares equation
 
-$\sum_{i=1}^N w_i(x_i - \mu)^2$
-
-a: 0.1471
-
-b: 0.300
-
-c: 0.0025
-
-d: 1.077
+$\sum_{i=1}^N w_i( x_i - \! \mu)^2$
 
 
-Hmmm...how do we figure this out? Well, one way would be to just plug in values.
+a: 0.1471  
+b: 0.300  
+c: 0.0025  
+d: 1.077  
+
+
+Hmmm...how do we figure this out? Well, one way would be to just plug in values and figure out which value minimizes mu
 ```{r}
 
 #Let's just copy and paste in the R vectors from above.
@@ -38,31 +51,33 @@ for(i in 1:4)
   print(newScore)
 }
 ```
-**2. Consider the following data set**
+```{r}
+#Or similarly do this with sapply() function
+sapply(u,function(X) sum(w*(x - X)^2))
+```
 
-x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+What we find is option (a) is the lowest. Alternatively, we can take the partial derivative of the above equation with respect to mu and set it equal to zero, which gives us the following:
+```{r}
+sum(x*w)/sum(w)
+```
 
-y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
-
+### Question 2  
+Consider the following data set:  
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)  
+y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)  
 Fit the regression through the origin and get the slope treating y as the outcome and x as the regressor.
 
-a: 0.59915
+a: 0.59915  
+b: -0.04462  
+c: -1.713  
+d: 0.8263  
 
-b: -0.04462
-
-c: -1.713
-
-d: 0.8263
-
+Let's see how pretty data looks by plotting it.
 ```{r}
-#here we try to explain y using x by estimating beta x, thus generating a line with slope beta x. Specifically in this case, we're going to force the line to go through the origin, (0,0). So force the line to go through (0,0). This is usually not a good solution unless we center our data. 
 x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
-
 y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
 
-df = data.frame(x,y)
-
-plot(y~x ,data = df,
+plot(y~x,
      xlab = "X",
      ylab = "Y",
      main = "Y vs X",
@@ -72,74 +87,113 @@ plot(y~x ,data = df,
 ```
 
 
+Here we try to explain y using x by estimating beta x, thus generating a line with slope beta x. Specifically in this case, we're going to force the line to go through the origin, (0,0) by removing the intercept. This is usually not a good solution unless we center our data. But there are couple ways we can find this slope using R. 
+
+In week one we briefly discussed deriving the linear regression equations which then allowed us to estimate parameters B0^ and B1^ for a simple linear regression.
+
+B1^ = (Covariance of x and y) / (Variance of x)  
+B0^ = (mean of y)  - B1^ * (mean of x)
 ```{r}
-Sxy = sum((x - mean(x)) * (y - mean(y)))
-Sxx = sum((x - mean(x)) ^ 2)
-Syy = sum((y - mean(y)) ^ 2)
-c(Sxy, Sxx, Syy)
+# Sxy = sum((x - mean(x)) * (y - mean(y)))
+# Sxx = sum((x - mean(x)) ^ 2)
+# Syy = sum((y - mean(y)) ^ 2)
+# c(Sxy, Sxx, Syy)
+# beta_0_hat = mean(y) - beta_1_hat * mean(x)
+
+
+#Uncorrected sum of products of x and y
+Sxy = sum(x  * y)
+#Uncorrected sum of squares of x
+Sxx = sum(x *x) 
 ```
 ```{r}
 beta_1_hat = Sxy / Sxx
-beta_0_hat = mean(y) - beta_1_hat * mean(x)
-c(beta_0_hat, beta_1_hat)
+
+```
+So there's our slope when we fit the regression through the origin. Here's how this can be done with the lm() function.
+```{r}
+#Be default an intercept is included so we need to add a '- 1' term.
+model.2a <- lm(y ~ x - 1)
+coef(model.2a)
+
+
+# model <- lm(y~x)
+# model
+# 
+# x_centered <- y-mean(y)
+# y_centered <- x-mean(x)
+# model <- lm(y_centered ~ x_centered)
+# model
+```
+Here's another way
+
+```{r}
+model.2b <- lm(y ~ x + 0)
+coef(model.2b)
 ```
 
 ```{r}
-model <- lm(y~x - 1)
-model
-
-model <- lm(y~x + 1)
-model
-
-model <- lm(y~x)
-model
-
-x_centered <- y-mean(y)
-y_centered <- x-mean(x)
-model <- lm(y_centered ~ x_centered)
-model
-```
-
-```{r}
-plot(y~x,data = df,
+plot(y ~ x,
      xlab = "X",
      ylab = "Y",
      main = "Y vs X",
      pch  = 20,
      cex  = 2,
      col  = "grey")
-abline(model, lwd = 3, col = "darkorange")
+abline(model.2b, lwd = 3)
 ```
 
-3. From the datasets package ‘mtcars’, fit the regression model with mpg as the outcome and weight (wt) and horsepower (hp) as the predictor. Use the matrix notation [insert latex] , give the slope coefficient and adjusted  as R output
+### Question 3  
+From the datasets package ‘mtcars’, fit the regression model with mpg as the outcome and weight (wt) and horsepower (hp) as the predictor. Use the matrix notation $(X^TX)^{-1}(X^TY)$ , give the slope coefficient and adjusted  as R output
 
 ```{r}
 data("mtcars")
 head(mtcars)
-y <- mtcars$mpg
+```
+
+
+```{r}
+y  <- mtcars$mpg
 x1 <- mtcars$wt
 x2 <- mtcars$hp
 
 x0 <- rep(1,length(x1))
 Y = as.matrix(y)
 X = as.matrix(cbind(x0,x1,x2))
-beta <- solve(t(X) %*% X) %*% (t(X) %*% Y)
-beta
-
-Y_hat <- X %*% beta
+beta_coefs <- solve(t(X) %*% X) %*% (t(X) %*% Y)
+beta_coefs
+```
+How good is our prediction? The second part of the question asks us to calculate adjusted $R^2$. We can first calculate R^2, the coefficient of determination, which is interpreted as an index "for the ratio of 'explained' variance or the effect size."
+```{r}
+Y_hat <- X %*% beta_coefs
 SST   = sum((Y - mean(Y)) ^ 2)
 SSReg = sum((Y_hat - mean(Y)) ^ 2)
 
 R2 = SSReg/SST
 R2
+```
+Just another way you may have calculated $R^2$:
+```{r}
+R2 <- (t(Y_hat-mean(y)) %*% (Y_hat-mean(y)))  /  (t(Y-mean(y)) %*% (Y-mean(y)))
+R2
+```
+Now let's calculate adjusted $R^2$ by scaling with the number of predictors in our model:
+```{r}
+sampleSize <- length(Y)
+numPred <-2
+R2.adj <- 1 - (1 - R2)*(sampleSize - 1)/(sampleSize - numPred -1)
 
-# model <- lm(y~x1+x2)
-# coef(model)
-# summary(model)
-
+R2.adj
 ```
 
-4. Consider the following data set (used above as well).
+Finally, let's compare these results with the lm() output
+```{r}
+model.3 <- lm(y~x1+x2)
+summary(model.3)
+```
+
+### Question 4  
+Consider the following data set (used above as well).
 x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
 y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
 What is the intercept for fitting the model with x as the predictor and y as the outcome?
@@ -148,23 +202,22 @@ What is the intercept for fitting the model with x as the predictor and y as the
 x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
 y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
 
-model <- lm(y~x)
-summary(model)
-
+model.4 <- lm(y~x)
+coef(model.4)
 ```
 
-
-5. You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
+### Question 5  
+You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
 a: It must be identically 0.
 b: It is undefined as you have to divide by zero.
 
 ```{r}
 #the constant (or Y intercept) will be the expected value of Y when predictor X is zero. The expected value of Y being the mean. 
-y_zero <- y - mean(y)
-x_zero <- x - mean(x)
+y.zero <- y - mean(y)
+x.zero <- x - mean(x)
 
-model <- lm(y~x)
-summary(model)
+model.5a <- lm(y.zero ~ x.zero)
+summary(model.5a)
 
 plot(y~x,data = df,
      xlab = "X",
@@ -174,29 +227,99 @@ plot(y~x,data = df,
      cex  = 2,
      col  = "grey",
      xlim= c(0,1))
-abline(model, lwd = 3, col = "darkorange")
+abline(model.5a, lwd = 3)
 ```
 
-
-6. Consider the data given by
+### Question 6  
+Consider the data given by
 x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
-What value minimizes the sum of the squared distances between these points and itself?
-a: 0.36
-b: 0.573
-c: 0.8
-d: 0.44
-
-
+What value minimizes the sum of the squared distances between these points and itself?  
+a: 0.36  
+b: 0.573  
+c: 0.8  
+d: 0.44  
 ```{r}
 x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
 # calculate the mean
-print(mean(x))
+mean(x)
 ```
-7. Let the slope having fit Y as the outcome and X as the predictor be denoted as $\sum_{i=1}^N w_i(x_i - \mu)^2$. Let the slope from fitting X as the outcome and Y as the predictor be denoted as . Suppose that you divide  by ; in other words consider .
-What is this ratio always equal to?
-a: Cor(Y,X)
-b: Var(Y)/Var(X) 
-c: 1
-d: 2SD(Y)/SD(X)
+### Question 7  
+Let the slope having fit Y as the outcome and X as the predictor be denoted as $\beta_1$. Let the slope from fitting X as the outcome and Y as the predictor be denoted as $\gamma_1$ Suppose that you divide  by ; in other words consider $\frac{\beta_1}{\gamma_1}$.
+What is this ratio always equal to?  
+a: Cor(Y,X)  
+b: Var(Y)/Var(X)   
+c: 1  
+d: 2SD(Y)/SD(X)  
 
+Show how you obtained this result (hint, check out slide 76).  
+
+
+So, this one's pretty straight forward if you followed the instructions:
+
+$$\hat{B_1} = \frac{\text{Covariance of x and y}}{\text{Variance of x}}$$  
+
+$$\beta_1 = \frac{\text{Cov(X,Y)}}{\text{Var(X)}}$$  
+
+$$\gamma_1 = \frac{\text{Cov(X,Y)}}{\text{Var(Y)}}$$ 
+
+$$\frac{\beta_1}{\gamma_1} = (\frac{\text{Cov(X,Y)}}{\text{Var(X)}}) (\frac{\text{Var(Y)}}{\text{Cov(X,Y)}})$$  
+
+$$\frac{\beta_1}{\gamma_1} = \frac{\text{Var(Y)}}{\text{Var(X)}}$$  
+
+### Bonus 1   
+Demonstration of the Central Limit Theorem: let , the sum of 20 independent Uniform(0,1) random variables. In R, create 1000 simulations of x and plot their histogram. On the histogram, overlay a graph of the normal density function. Comment on any differences between the histogram and the curve.
+
+```{r}
+val.min <- 0
+val.max <- 1
+numSims <- 1000
+numVars <- 20
+
+x <-replicate(numSims, sum(runif(numVars,val.min,val.max)))
+
+
+x.mean <- sum(numVars * .5*(0+1)) # should be 10
+x.var   <- sum(numVars* (0-1)^2/12)
+x.std <- sqrt(x.var)
+hist(x,prob = T)
+# plot(density(x))
+lines(density(rnorm(length(x),mean=x.mean, sd=x.std),adjust = 2),
+          col="darkblue", lwd=2, yaxt="n")
+```
+
+### Bonus 2  
+Distribution of averages and differences: the heights of men in the United States are approximately normally distributed with mean 69.1 inches and standard deviation 2.9 inches. The heights of women are approximately normally distributed with mean 63.7 inches and standard deviation 2.7 inches. Let x be the average height of 100 randomly sampled men, and y be the average height of 100 randomly sampled women. In R, create 1000 simulations of x − y and plot their histogram. Using the simulations, compute the mean and standard deviation of the distribution of x − y and compare to their exact values.  
+
+Simulation results:
+```{r}
+numSims <- 1000
+sampleSize <- 100
+x.mean <- 69.1
+x.sd <- 2.9
+
+y.mean <- 63.7
+y.sd <- 2.7
+
+xyDiff<-replicate(numSims, mean(rnorm(sampleSize, mean = x.mean, sd = x.sd)) - mean(rnorm(sampleSize, mean = y.mean, sd = y.sd)))
+
+hist(xyDiff,prob = T)
+
+print("simulation mean:")
+mean(xyDiff)
+
+print("simulation sd:")
+sd(xyDiff)
+```
+Find the exact mean difference by just subtracting the given mean of x and y:
+```{r}
+x.mean - y.mean
+```
+
+Using the variance sum law (assuming x and y are independent), we can compute the variance of the difference between x and y and then find our sd:
+```{r}
+x.var = x.sd^2
+y.var = y.sd^2
+
+sqrt((x.var+y.var)/sampleSize)
+```
 

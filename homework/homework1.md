@@ -1,21 +1,27 @@
 Homework 1
 ================
 
-**1. Consider the data set given below** x &lt;- c(0.18, -1.54, 0.42, 0.95) And weights given by w &lt;- c(2, 1, 3, 1)
+Question 1
+----------
 
-**Give the value (a, b, c, or d) that minimizes the least squares equation **
+Consider the data set given below:
 
-$\sum_{i=1}^N w_i(x_i - \mu)^2$
+x &lt;- c(0.18, -1.54, 0.42, 0.95)
+
+And weights given by
+
+w &lt;- c(2, 1, 3, 1)
+
+Give the value (a, b, c, or d) that minimizes the least squares equation
+
+$\\sum\_{i=1}^N w\_i( x\_i - \\! \\mu)^2$
 
 a: 0.1471
-
 b: 0.300
-
 c: 0.0025
-
 d: 1.077
 
-Hmmm...how do we figure this out? Well, one way would be to just plug in values.
+Hmmm...how do we figure this out? Well, one way would be to just plug in values and figure out which value minimizes mu
 
 ``` r
 #Let's just copy and paste in the R vectors from above.
@@ -36,9 +42,22 @@ for(i in 1:4)
     ## [1] 3.862994
     ## [1] 9.768983
 
-**2. Consider the following data set**
+``` r
+#Or similarly do this with sapply() function
+sapply(u,function(X) sum(w*(x - X)^2))
+```
 
-x &lt;- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+    ## [1] 3.716543 3.880100 3.862994 9.768983
+
+What we find is option (a) is the lowest. Alternatively, we can take the partial derivative with respect to mu and set it equal to zero, which gives us the following:
+
+``` r
+sum(x*w)/sum(w)
+```
+
+    ## [1] 0.1471429
+
+**2. Consider the following data set** x &lt;- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
 
 y &lt;- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
 
@@ -69,7 +88,7 @@ plot(y~x ,data = df,
      col  = "grey")
 ```
 
-![](homework1_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](homework1_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 ``` r
 Sxy = sum((x - mean(x)) * (y - mean(y)))
@@ -153,7 +172,7 @@ plot(y~x,data = df,
 abline(model, lwd = 3, col = "darkorange")
 ```
 
-![](homework1_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](homework1_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 1.  From the datasets package ‘mtcars’, fit the regression model with mpg as the outcome and weight (wt) and horsepower (hp) as the predictor. Use the matrix notation \[insert latex\] , give the slope coefficient and adjusted as R output
 
@@ -271,7 +290,7 @@ plot(y~x,data = df,
 abline(model, lwd = 3, col = "darkorange")
 ```
 
-![](homework1_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](homework1_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 1.  Consider the data given by x &lt;- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42) What value minimizes the sum of the squared distances between these points and itself? a: 0.36 b: 0.573 c: 0.8 d: 0.44
 
