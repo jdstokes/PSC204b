@@ -1,7 +1,13 @@
 # PSC204b Lab 1
-* [Homework 1](../homework/homework1.nb.html)
+* Introduction
+* [Experience and future topics survey](https://docs.google.com/forms/d/1WiT_xNI_P5cUss_cwSdVStlIOYFKhRpLuxd1pwPFBmU/edit)
 * Practice
-* Future topics
+* Homework 1
+    [notebook](../homework/homework1.Rmd)
+* Remaining time..
+    
+
+
 
 
 
