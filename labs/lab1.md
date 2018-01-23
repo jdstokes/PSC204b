@@ -1,10 +1,10 @@
 # PSC204b Lab 1
-* Introduction
-* [Experience and future topics survey](https://docs.google.com/forms/d/1WiT_xNI_P5cUss_cwSdVStlIOYFKhRpLuxd1pwPFBmU/edit)
-* Practice
+* [R warmup](../homework/homework1.Rmd)
+<a href="../homework/homework1.Rmd" download>R warmup</a>
+
 * Homework 1
     [notebook](../homework/homework1.Rmd)
-* Remaining time..
+
     
 
 
