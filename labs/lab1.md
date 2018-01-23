@@ -1,7 +1,6 @@
 # PSC204b Lab 1
 * [R warmup](../homework/homework1.Rmd)  
-
-<a href="../homework/homework1.Rmd" download target="_blank">R warmup</a>
+* [R warmup](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab1_warmup.Rmd)  
 
 
 * Homework 1
