@@ -1,14 +1,19 @@
 ---
 title: "Lab1 warmup"
 output: github_document
+
 ---
+Created by user hejtmy, https://github.com/lab-code/R-for-non-programmers/blob/master/R/Practice/Solutions/data-frames.R
+
 
 We will try to reproduce some statistics from [A Statistical Analysis of the Work of Bob Ross](https://fivethirtyeight.com/features/a-statistical-analysis-of-the-work-of-bob-ross/) to demonstrate, that even basic knowledge of R will allow you to replicate world renown stats site data :)
 
 1. Download and load data from here [path to data](https://raw.githubusercontent.com/fivethirtyeight/data/master/bob-ross/elements-by-episode.csv) to variable df_bob. I will tell you, that R works with web links quite well. SO you don't have to load the file from HDD ;)
 ```{r}
 # Your code
-
+df_bob <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/bob-ross/elements-by-episode.csv", header = T)
+nrow(df_bob)
+ncol(df_bob)
 ```
 
 At this point I recommend looking at the table closesly. What type of data you have? What are the columns etc.
@@ -16,24 +21,33 @@ At this point I recommend looking at the table closesly. What type of data you h
 ```{r}
 # Your code
 
+
+head(df_bob)
+
+colnames(df_bob)
 ```
 
 It should be clear that what you have in each column is a logical (boolean) 0-1 value. This will come in handy :)
 
 2. How many episodes were aired? Save to n_episodes variable.
 ```{r}
-
+n_episodes <- nrow(df_bob)
+n_episodes
 ```
 
 3. What percent if BOB's paintings have more than one TREE (column TREES)?  How many take place in Winter? 
 ```{r}
 # Your code
+df_bob$TREES
 
+# sum(df_bob$TREES)/n_episodes
+# sum(df_bob$WINTER)/n_episodes
 ```
 
-4. How many episodes have have more than one trees AND take place in winter?
+4. How many episodes have more than one trees AND take place in winter?
 ```{r}
 # Your code
+nrow(df_bob[df_bob$TREES == 1 & df_bob$WINTER == 1, ])/n_episodes
 
 
 ```
@@ -41,6 +55,8 @@ It should be clear that what you have in each column is a logical (boolean) 0-1 
 5. Create a new column called N_THEMES that sums how many different themes are in a single image. Take look at ?rowSums function.
 ```{r}
 # Your code
+df_bob$N_THEMES = rowSums(df_bob[, c(3:69)])
+summary(df_bob$N_THEMES)
 
 ```
 
