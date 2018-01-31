@@ -322,4 +322,3 @@ y.var = y.sd^2
 
 sqrt((x.var+y.var)/sampleSize)
 ```
-
