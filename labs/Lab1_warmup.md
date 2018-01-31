@@ -7,35 +7,153 @@ We will try to reproduce some statistics from [A Statistical Analysis of the Wor
 
 ``` r
 # Your code
+df_bob <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/bob-ross/elements-by-episode.csv", header = T)
+nrow(df_bob)
 ```
+
+    ## [1] 403
+
+``` r
+ncol(df_bob)
+```
+
+    ## [1] 69
 
 At this point I recommend looking at the table closesly. What type of data you have? What are the columns etc.
 
 ``` r
 # Your code
+
+
+head(df_bob)
 ```
+
+    ##   EPISODE                 TITLE APPLE_FRAME AURORA_BOREALIS BARN BEACH
+    ## 1  S01E01 "A WALK IN THE WOODS"           0               0    0     0
+    ## 2  S01E02        "MT. MCKINLEY"           0               0    0     0
+    ## 3  S01E03        "EBONY SUNSET"           0               0    0     0
+    ## 4  S01E04         "WINTER MIST"           0               0    0     0
+    ## 5  S01E05        "QUIET STREAM"           0               0    0     0
+    ## 6  S01E06         "WINTER MOON"           0               0    0     0
+    ##   BOAT BRIDGE BUILDING BUSHES CABIN CACTUS CIRCLE_FRAME CIRRUS CLIFF
+    ## 1    0      0        0      1     0      0            0      0     0
+    ## 2    0      0        0      0     1      0            0      0     0
+    ## 3    0      0        0      0     1      0            0      0     0
+    ## 4    0      0        0      1     0      0            0      0     0
+    ## 5    0      0        0      0     0      0            0      0     0
+    ## 6    0      0        0      0     1      0            0      0     0
+    ##   CLOUDS CONIFER CUMULUS DECIDUOUS DIANE_ANDRE DOCK DOUBLE_OVAL_FRAME FARM
+    ## 1      0       0       0         1           0    0                 0    0
+    ## 2      1       1       0         0           0    0                 0    0
+    ## 3      0       1       0         0           0    0                 0    0
+    ## 4      1       1       0         0           0    0                 0    0
+    ## 5      0       0       0         1           0    0                 0    0
+    ## 6      0       1       0         0           0    0                 0    0
+    ##   FENCE FIRE FLORIDA_FRAME FLOWERS FOG FRAMED GRASS GUEST
+    ## 1     0    0             0       0   0      0     1     0
+    ## 2     0    0             0       0   0      0     0     0
+    ## 3     1    0             0       0   0      0     0     0
+    ## 4     0    0             0       0   0      0     0     0
+    ## 5     0    0             0       0   0      0     0     0
+    ## 6     0    0             0       0   0      0     0     0
+    ##   HALF_CIRCLE_FRAME HALF_OVAL_FRAME HILLS LAKE LAKES LIGHTHOUSE MILL MOON
+    ## 1                 0               0     0    0     0          0    0    0
+    ## 2                 0               0     0    0     0          0    0    0
+    ## 3                 0               0     0    0     0          0    0    0
+    ## 4                 0               0     0    1     0          0    0    0
+    ## 5                 0               0     0    0     0          0    0    0
+    ## 6                 0               0     0    1     0          0    0    1
+    ##   MOUNTAIN MOUNTAINS NIGHT OCEAN OVAL_FRAME PALM_TREES PATH PERSON
+    ## 1        0         0     0     0          0          0    0      0
+    ## 2        1         0     0     0          0          0    0      0
+    ## 3        1         1     0     0          0          0    0      0
+    ## 4        1         0     0     0          0          0    0      0
+    ## 5        0         0     0     0          0          0    0      0
+    ## 6        1         1     1     0          0          0    0      0
+    ##   PORTRAIT RECTANGLE_3D_FRAME RECTANGULAR_FRAME RIVER ROCKS SEASHELL_FRAME
+    ## 1        0                  0                 0     1     0              0
+    ## 2        0                  0                 0     0     0              0
+    ## 3        0                  0                 0     0     0              0
+    ## 4        0                  0                 0     0     0              0
+    ## 5        0                  0                 0     1     1              0
+    ## 6        0                  0                 0     0     0              0
+    ##   SNOW SNOWY_MOUNTAIN SPLIT_FRAME STEVE_ROSS STRUCTURE SUN TOMB_FRAME TREE
+    ## 1    0              0           0          0         0   0          0    1
+    ## 2    1              1           0          0         0   0          0    1
+    ## 3    0              0           0          0         1   1          0    1
+    ## 4    0              1           0          0         0   0          0    1
+    ## 5    0              0           0          0         0   0          0    1
+    ## 6    1              1           0          0         1   0          0    1
+    ##   TREES TRIPLE_FRAME WATERFALL WAVES WINDMILL WINDOW_FRAME WINTER
+    ## 1     1            0         0     0        0            0      0
+    ## 2     1            0         0     0        0            0      1
+    ## 3     1            0         0     0        0            0      1
+    ## 4     1            0         0     0        0            0      0
+    ## 5     1            0         0     0        0            0      0
+    ## 6     1            0         0     0        0            0      1
+    ##   WOOD_FRAMED
+    ## 1           0
+    ## 2           0
+    ## 3           0
+    ## 4           0
+    ## 5           0
+    ## 6           0
 
 It should be clear that what you have in each column is a logical (boolean) 0-1 value. This will come in handy :)
 
 1.  How many episodes were aired? Save to n\_episodes variable.
 
-2.  What percent if BOB's paintings have more than one TREE (column TREES)? How many take place in Winter?
+``` r
+n_episodes <- nrow(df_bob)
+n_episodes
+```
+
+    ## [1] 403
+
+1.  What percent if BOB's paintings have more than one TREE (column TREES)? How many take place in Winter?
 
 ``` r
 # Your code
+df_bob$TREES
 ```
 
-1.  How many episodes have have more than one trees AND take place in winter?
+    ##   [1] 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1
+    ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 1 1 0 0 1 0 1 1 1 1 1 1
+    ##  [71] 1 1 1 1 0 0 1 1 0 1 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1
+    ## [106] 0 1 1 1 0 1 1 1 0 1 0 1 1 1 1 1 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0
+    ## [141] 1 1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    ## [176] 0 1 1 0 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 0 1 1 0
+    ## [211] 1 0 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 0 1 1
+    ## [246] 1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 0 1 0 1 1 1 1 0 1 1
+    ## [281] 1 1 1 0 1 1 1 1 0 1 1 1 1 0 1 1 1 0 0 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1
+    ## [316] 1 1 1 1 0 1 0 1 0 0 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+    ## [351] 1 1 1 1 1 0 1 1 1 1 1 0 1 1 1 1 1 1 0 1 1 1 0 0 1 1 1 0 0 1 1 1 1 1 1
+    ## [386] 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+
+``` r
+# sum(df_bob$TREES)/n_episodes
+# sum(df_bob$WINTER)/n_episodes
+```
+
+1.  How many episodes have more than one trees AND take place in winter?
 
 ``` r
 # Your code
+nrow(df_bob[df_bob$TREES == 1 & df_bob$WINTER == 1, ])/n_episodes
 ```
+
+    ## [1] 0.1588089
 
 1.  Create a new column called N\_THEMES that sums how many different themes are in a single image. Take look at ?rowSums function.
 
 ``` r
 # Your code
+df_bob$N_THEMES = rowSums(df_bob[, c(3:69)])
+summary(df_bob$N_THEMES)
 ```
+
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##   0.000   6.000   8.000   7.993  10.000  15.000
 
 1.  Select those episodes with the MOST themes overall and save them to df\_theme\_overload. E.g. if the most themes occuring are 15, select ALL episodes that have 15 themes.
 
