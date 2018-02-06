@@ -29,7 +29,7 @@ fit_glm <- glm(vs ~ mpg, data = mtcars, family = binomial)
 x_pred <- seq(from=min(mtcars$mpg), to=max(mtcars$mpg),length.out=100)
 
 plot(vs ~ mpg, data = mtcars, 
-     pch = 10, ylab = "Estimated Probability", 
+     pch = 20, ylab = "Estimated Probability", 
      main = "Ordinary vs Logistic Regression")
 
 abline(fit_lm, col = "darkorange")
@@ -65,7 +65,7 @@ summary(fit_glm)
 ########################################
 
 # You can download off of Canvas (week 4)
-d <- read.csv("/Users/jdstokes/repos/204b/data/YSPdata.csv", header = TRUE, na.strings = "")
+d <- read.csv("https://raw.githubusercontent.com/jdstokes/PSC204b/master/data/YSPdata.csv", header = TRUE, na.strings = "")
 
 # Just need to clean up some missing values
 gameEXP <- data.frame(d$ExprVG,d$withdrew,d$"Sex")
@@ -149,11 +149,12 @@ logOddsWithdraw  <- log(probWithdraw/(1-probWithdraw)) # Here's how we could tra
 
 
 predict(model2,newdata = data.frame(gameEXP=xVals),type = "response")
-#Now we just need to subtract to find our unit difference 
-probWithdraw[9] - probWithdraw[8]
 
-#         Interpretation: For every one unit increase in game experience,
-#         we'd expect a 4% percent difference in probability of leaving the study
+#Let's subtract the predicted probability with 2 units of experience from the predicted probability with 2 units of experience
+probWithdraw[5] - probWithdraw[9]
+
+#         Interpretation: For a one unit increase in game experience,
+#         we'd expect a 16% percent difference in probability of leaving the study
 
 
 # We can see how well the model fits
