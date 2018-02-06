@@ -1,0 +1,295 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+1) Install and load the 'car' package. We're going to use the 'Leinhardt' dataset included in 'car'.
+
+Check the dataset with '?Leinhardt'
+
+Drop the 'Europe' region from the dataset and then compare 'Americas' to the remaining two other regions – code it accordingly. Infant-mortality rate per 1000 live births (infant) is the dependent variable.
+
+a) Set up the model and interpret the results
+
+b) Now add the variable 'oil' (Oil-exporting country). Code it so that America and non-oil exporting countries are the reference and add interaction among predictors. Interpret the results
+
+c) Check the model assumptions and describe. You can look at the first two plots of plot(fittedmodel)
+
+Bonus) Find a way to plot the means (infant on y axis) across oil (oil on x axis) for the different regions (different lines).
+
+
+Load data and drop europe
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+library(dummies)
+library(car)
+head(Leinhardt)
+
+data <- filter(Leinhardt, region != "Europe")
+```
+
+a) Set up the model and interpret the results
+```{r}
+data2 = na.omit(data)
+data2$region <-relevel(data2$region,"Americas")
+fit <-lm(data=data2,formula= infant~region)
+summary(fit)
+
+```
+
+
+Setup our own dummy codes
+
+```{r}
+data3 <- bind_cols(data2,data.frame(dummy(data2$region)))
+```
+
+ok
+```{r}
+colnames(data3)
+```
+
+Fit model with dummy codes
+
+```{r}
+fit <-lm(data=data3,formula= infant~ data2Africa + data2Asia)
+summary(fit)
+```
+We have statistical signficance for the parameter coefficient "regionAfrica" (p = 0.00936). Thus, we have evidence of a difference in infant mortality rate in Africa and the Americas. Because the coefficient is positive, this suggests infant mortatlity rate is higher for Africa.
+
+
+Let's take a look
+```{r}
+data2 %>%
+  ggplot(aes(y=infant,x= region,col=oil)) +
+  labs(x="Region",y="Infant-mortality rate") +
+  geom_jitter(width = 0.1,alpha=.8,size=3) +
+  theme_base()
+```
+
+b) Now add the variable 'oil' (Oil-exporting country). Code it so that America and non-oil exporting countries are the reference and add interaction among predictors. Interpret the results
+```{r}
+fit <-lm(data=data2,formula= income~region*oil)
+summary(fit)
+```
+
+
+
+Ok
+```{r}
+data2 %>%
+  ggplot(aes(x=oil,y=infant,col=region)) +
+  labs(x="Oil exporting country?",y="Infant-mortality rate") +
+  geom_jitter(width = 0.1,alpha=.8,size=3) +
+  theme_base()+
+  theme(legend.position="bottom", legend.direction="horizontal",
+        legend.title = element_blank())
+```
+
+
+Ok
+```{r}
+data2 %>%
+  group_by(region,oil) %>%
+  summarise(mean_infant = mean(infant)) %>%
+  ggplot(aes(x=oil,y=mean_infant,colour=region,group=region)) +
+  geom_line(size=1) +
+  geom_point(size=3)+
+  theme_base()+
+  theme(legend.position="bottom", legend.direction="horizontal",
+        legend.title = element_blank()) +
+  labs(x="Oil exporting country?",y="Mean Infant-mortality rate")
+```
+
+
+
+2) Logarithmic transformations: the dataset mcdonald.dat contains mortality rates and various environmental factors from 60 U.S. metropolitan areas (see McDonald and Schwing, 1973). For this exercise we shall model mortality rate (MORT) given nitric oxides (NOX), sulfur dioxide (SOx), and hydrocarbons (HC) as inputs. This model is an extreme oversimplification as it combines all sources of mortality and does not adjust for crucial factors such as age and smoking. We use it to illustrate log transformations in regression.
+
+a) Create a scatterplot of mortality rate (y-axis) versus level of nitric oxides (x). Do you think linear regression will fit these data well? Fit the regression and evaluate a residual plot from the regression.
+
+Import the data
+```{r}
+fpath <- file.path(dir.data,"mcdonald.dat")
+mcd <- read.table(fpath,header = TRUE)
+```
+
+
+Scatterplot using the "MORT" (y-axis) and "NOX" (x-axis) columns
+```{r}
+mcd %>%
+  ggplot(aes(y=MORT,x= log(NOX))) +
+  labs(x="level of nitric oxides",y="mortality rate") +
+  geom_point(size=3) +
+  theme_base()
+```
+
+
+Do you think linear regression will fit these data well?
+
+Linear regression
+```{r}
+fit <- lm(formula = MORT ~ NOX, data = mcd)
+summary(fit)
+```
+
+Residual plot
+```{r}
+plot(fit, which = 1)
+```
+
+
+b) Find an appropriate transformation that will result in data more appropriate for linear regression. Fit a regression to the transformed data and evaluate the new residual plot.
+
+```{r}
+fit <- lm(formula = MORT ~ I(log(NOX)), data = mcd)
+summary(fit)
+plot(fit, which = 1)
+```
+
+c) Interpret the slope coefficient from the model you chose in (b).
+
+d) Now fit a model predicting mortality rate using levels of nitric oxides, sulfur dioxide, and hydrocarbons as inputs. Use appropriate transformations when helpful. Plot the fitted regression model through the scatter plot (eg. you can use abline(fittedmodel) for that line) and interpret the coefficients.
+
+e) Run diagnostic plots: qqPlot (from the 'car' package) and plot fitted vs. residuals. Comment on the plots.
+
+Bonus: You would like to estimate a model with two splines – i.e., with two regression lines that meet at a given knot point. The knot can be placed at x=0. Fit and plot the regression line overlaid on the scatter plot.
+
+
+
+```{r}
+library(car)
+
+dir.data <- "/Users/jdstokes/repos/204b/data"
+
+# construct the file path. make sure to include the filename with the extension.
+fpath <- file.path(dir.data,"spline.dat")
+
+# if your file contains a header, change the 'header' argument to TRUE
+spline_data <- read.table(fpath,header = TRUE)
+spline_data %>% 
+  ggplot(aes(y=y,x= x)) +
+  geom_point() +
+  theme_base()
+```
+
+simple
+```{r}
+y = spline_data$y
+x = spline_data$x
+x1 = spline_data$x
+x2 = spline_data$x
+
+x1[spline_data$x <0]  = 0
+x2[spline_data$x >0]  = 0
+
+fit = lm(y ~ x1 + x2)
+summary(fit)
+
+plot(y~x,data = spline_data,
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+
+x.pred <- seq(min(spline_data$x), max(spline_data$x))
+x.pred1 = x.pred
+x.pred2 = x.pred
+
+x.pred1[x.pred <0] = 0
+x.pred2[x.pred >0] = 0
+y.pred <- predict(fit,list( x1 = x.pred1, x2 = x.pred2))
+lines(x.pred , y.pred, lwd = 3)
+```
+
+kristine's formula
+```{r}
+y = spline_data$y
+x = spline_data$x
+x1 = spline_data$x
+x2 = spline_data$x ^ 2
+
+x1[spline_data$x <0]  = 0
+x2[spline_data$x >0]  = 0
+
+fit = lm(y ~ x + x1 + x2)
+summary(fit)
+
+plot(y~x,data = spline_data,
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+
+x.pred <- seq(min(spline_data$x), max(spline_data$x))
+x.pred1 = x.pred 
+x.pred2 = x.pred ^2
+
+x.pred1[x.pred <0] = 0
+x.pred2[x.pred >0] = 0
+y.pred <- predict(fit,list( x = x.pred, x1 = x.pred1, x2 = x.pred2))
+lines(x.pred , y.pred, lwd = 3)
+```
+
+my new apprach
+```{r}
+y = spline_data$y
+x = spline_data$x
+x1 = spline_data$x
+x2 = spline_data$x ^2
+
+x1[spline_data$x <0]  = 0
+x2[spline_data$x >0]  = 0
+x[spline_data$x >0]  = 0
+
+
+fit = lm(y ~ x + x1 + x2)
+summary(fit)
+
+plot(y~x,data = spline_data,
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+
+x.pred <- seq(min(spline_data$x), max(spline_data$x))
+x.pred1 = x.pred 
+x.pred2 = x.pred ^2
+
+x.pred1[x.pred <0] = 0
+x.pred2[x.pred >0] = 0
+x.pred[x.pred >0] = 0
+y.pred <- predict(fit,list(x = x.pred, x1 = x.pred1, x2 = x.pred2))
+
+x.pred <- seq(min(spline_data$x), max(spline_data$x))
+lines(x.pred , y.pred, lwd = 3)
+```
+Kristine
+
+```{r}
+# BONUS QUESTION
+################
+
+dat = spline_data
+head(dat)
+
+with(dat, plot(x, y))
+
+fit.spline = lm(y ~ 1 + x + I((x^2)*(x < 0)) + 
+                  I((x)*(x > 0)), data = dat)
+
+
+summary(fit.spline)
+
+b.0 <- coef(fit.spline)[1]
+b.1 <- coef(fit.spline)[2]
+b.2 <- coef(fit.spline)[3]
+b.3 <- coef(fit.spline)[4]
+x.0 <- seq((min(dat$x) - 1), 0, 1)
+x.1 <- seq(0, (max(dat$x) + 1), 1)
+y.0 <- b.0 + b.1 * x.0 + b.2 * x.0^2
+y.1 <- (b.0 + b.1 * 0 + b.2 * 0 + (b.1 + b.3) * x.1)
+with(dat, plot(x, y))
+lines(x.0,y.0, col="red", lwd = 2)
+lines(x.1,y.1, col="blue", lwd = 2)
+
+```
+
