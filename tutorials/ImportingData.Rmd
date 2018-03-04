@@ -1,0 +1,51 @@
+---
+title: "Importaing data"
+output: html_notebook
+---
+
+Set up your data directory  
+```{r}
+dir.data <- "/Users/jdstokes/repos/204b/data"
+```
+
+Importing tab-delimited files. 
+```{r}
+# construct the file path. make sure to include the filename with the extension.
+fpath <- file.path(dir.data,"mcdonald.dat")
+
+# if your file contains a header, change the 'header' argument to TRUE
+data <- read.table(fpath,header = TRUE)
+
+# EXTRA. this imports your data as a list. use the typeof() function to check the object type 
+typeof(data)
+
+# EXTRA. You can see that length in this case tells us the number of columns
+length(data)
+ncol(data)
+
+#EXTRA. We can also see the number of elements in each list using the lengths() function
+lengths(data)
+nrow(data)
+```
+
+Importing .csv files
+```{r}
+fpath <- file.path(dir.data,"gender-height-weight.csv")
+
+# We can use read.table() and specify the sep argument
+data <- read.table(fpath,header = TRUE,sep=',')
+
+# Could also do this..
+data <- read.csv(fpath)
+```
+
+
+Loading R files like .rda and .rdata 
+```{r}
+fpath <- file.path(dir.data,"TeachingRatings.rda")
+load(fpath)
+```
+
+
+
+

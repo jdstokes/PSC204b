@@ -1,0 +1,280 @@
+---
+title: "Homework 5"
+output: html_notebook
+---
+Packages and random seed
+```{r}
+library(ggplot2)
+library(dplyr)
+library(pander)
+library(tidyr)
+library(glmnet)
+set.seed(02082018)
+```
+
+**Homework Week 5**
+
+**PSC 204B**
+
+For this homework, we will be using a simulated dataset to illustrate issues related to under- and over-fitting. You can use the following code to simulate the true model, which is a cubic model relating x and y.
+
+set.seed(02082018)
+
+x = rnorm(200)
+
+y = x + x^2 + x^3 + rnorm(200, 0, 4)
+
+dat = data.frame(y, x)
+
+You will use this generated data to answer the following questions.
+
+1. Create three models with polynomial parameters of different degrees: an under-fit model, a true model and an over-fit model.
+```{r}
+get_data <- function(x){
+n = length(x)
+totP = 12;
+truP = 3;
+e <- rnorm(n,0,4)
+totX <- cbind(poly(x, degree = totP, raw = TRUE))
+truX <- totX[,0:truP]
+beta <- rep(1,truP)
+y <- as.numeric(truX %*% beta + e)
+return(data.frame(y = y,x = totX))
+}
+
+n = 200
+x = rnorm(n)
+datTrain <- get_data(x)
+```
+
+```{r}
+predNames <- colnames(datTrain)[-1]
+fitList <- list()
+GetLM <- function(i) lm(data=datTrain,formula=as.formula(paste('y~',paste(predNames[1:i],collapse="+"))))
+fitList <- lapply(1:length(predNames),GetLM)
+```
+
+
+2. Plot the predicted curves over the sample data points in three separate plots (one for each model).
+```{r}
+# generate data for plotting curves
+x_seq <- seq(from=min(datTrain$x.1), to=max(datTrain$x.1),length.out=dim(datTrain)[1])
+
+datPlot <- get_data(x_seq)
+
+Y_under <- predict(fitList[[1]], newdata = datPlot)
+y_over  <- predict(fitList[[6]], newdata = datPlot)  
+y_true  <- predict(fitList[[3]], newdata = datPlot) 
+
+ggplot(datTrain,aes(y = y, x = x.1)) +
+  geom_point(size=2) +
+  geom_line(aes(x=x_seq,y=Y_under,colour='under')) + 
+  geom_line(aes(x=x_seq,y=y_over,colour='over')) +
+  geom_line(aes(x=x_seq,y=y_true,colour='true')) +
+  scale_colour_manual(values=c('under'='red', 'over'='green','true'='blue'),
+                      breaks=c('under','over','true'),name = "model")
+```
+
+3. Calculate mean squared error for each model. Your over-fit model should produce the lowest MSE.
+```{r}
+GetMSE <- function(y,yhat) {
+  mse <- sum((y-yhat)^2)/length(y)
+  return(mse)
+}
+
+mse_train <- mse_valid <- mse_valid_batch <-array()
+
+for (i in 1:length(fitList)){
+  mse_train[i] <- GetMSE(datTrain$y, predict(fitList[[i]]))
+  for (j in 1:100){
+    x = rnorm(n)
+    datValid <- get_data(x)
+    mse_valid_batch[j] <- GetMSE(datValid$y, predict(fitList[[i]],newdata = datValid))
+  }
+  mse_valid[i] = mean(mse_valid_batch)
+}
+
+results <- data.frame(numPred=1:length(fitList),mse_train,mse_valid)
+pander(results)
+```
+
+```{r}
+mse_train <- mse_valid <-array()
+
+TrainMSE <- function(i) GetMSE(datTrain$y, predict(fitList[[i]]))
+
+TestMSE <- function(i){
+  x = rnorm(n)
+    datValid <- get_data(x)
+    return(GetMSE(datValid$y, predict(fitList[[i]],newdata = datValid)))
+}
+
+BatchTestMSE <- function(i) mean(replicate(100,TestMSE(i)))
+
+mse_train <- sapply(1:length(fitList),TrainMSE)
+mse_valid <- sapply(1:length(fitList),BatchTestMSE)
+
+results <- data.frame(numPred=1:length(fitList),mse_train,mse_valid)
+pander(results)
+```
+
+```{r}
+results_long <- gather(results[1:8,],data,mse,mse_train:mse_valid,factor_key = TRUE)
+  
+ggplot(data=results_long, aes(x=numPred, y=mse, colour=data)) +
+    geom_line()
+```
+
+4. Now, using ridge regression in R, determine the best value for lambda (hint: you will need to install the glmnet package in R). Once you have selected the best value for lambda, solve for the regression coefficients.
+
+
+Regularization adds an aditional term to our loss function. 
+
+$L=\sum(\hat{Y_i}-Y_i)^2 + \lambda\sum B^2$
+
+The term to the right is our regularization term for this regularized linear regression loss function. As you can see, as long as lambda does not equal or greater than 0, the regularization term is always penalizing our loss function. Thus, the loss function is penalized here for high $B$ values (coefficients).
+
+Ridge regression can allow us to add regularization (and learn the best lambda through cross validation) and it can make sure the coefficients are lower but won't actually make them zero. Ridge regression uses L2 regularization. In this case the squared magnitude of the cofficient is added in the penalty term.
+
+In lasso regression, the regularization term is an absolute value. Lasso can also set our coefficients to zero if they aren't relevant. Lasso uses L1 regularization. Lasso regression uses the absolute value of the cofficients. 
+
+Lasso will penalize or shrink the less important feature coefficients to zero.
+
+L1: sparse weights
+L2: small distributed weights
+
+
+```{r}
+y <- datTrain[,1]
+x <- data.matrix(datTrain[,2:7])
+
+#alpha equals zero for ridge regression
+fit_ridge <- glmnet(x,y,alpha=0)
+
+#plot MSE x lambda
+fit_ridge.cv <- cv.glmnet(x,y,alpha=0)
+plot(fit_ridge.cv)
+```
+
+
+```{r}
+fit_ridge.cv$lambda.min
+```
+```{r}
+# we can use cross validation integration to find the lambda value that gives us the minimum error
+coef(fit_ridge.cv, s = "lambda.min")%>%
+  as.matrix()
+```
+
+
+```{r}
+y_predict <- predict(fit_ridge.cv, newx = x,s = "lambda.min")
+#Under fit MSE
+GetMSE(y,y_predict)
+```
+
+5. Repeat the above steps, using lasso regression in R.
+
+```{r}
+#set alpha to 1
+fit_lasso <- glmnet(x, y, alpha = 1)
+fit_lasso.cv <- cv.glmnet(x, y, alpha = 1)
+fit_lasso.cv$lambda.min
+```
+
+```{r}
+plot(fit_lasso.cv)
+coef(fit_lasso.cv,s = "lambda.min")
+```
+
+```{r}
+GetRegResults <- function(alpha,tag){
+  yTrain <- datTrain[,1]
+  xTrain <- data.matrix(datTrain[,-1])
+  
+  fitListRidge <- list()
+  mse_train_r <- mse_valid_r <-array()
+  
+  GetRidge <- function(i) cv.glmnet(xTrain[,1:i],y,alpha=alpha)
+  fitListRidge <- lapply(2:dim(xTrain)[2],GetRidge)
+  
+  TrainMSE_reg <- function(i){
+   yPred <- predict(fitListRidge[[i]],newx = xTrain[,0:i+1],s="lambda.min")
+   return(GetMSE(yTrain,yPred))
+  }
+  
+  ValidMSE_reg <- function(i){
+      x = rnorm(n)
+      datValid <- get_data(x)
+      yValid <- datValid[,1]
+      xValid <- data.matrix(datValid[,-1])
+      yPred <- predict(fitListRidge[[i]],newx = xValid[,0:i+1],s="lambda.min")
+      return(GetMSE(yValid,yPred))
+  }
+  
+  BatchValidMSE_reg <- function(i) mean(replicate(100,ValidMSE_reg(i)))
+  
+  mse_train_r <- sapply(1:length(fitListRidge),TrainMSE_reg)
+  mse_valid_r <- sapply(1:length(fitListRidge),BatchValidMSE_reg)
+  results <-data.frame(numPred=c(1:length(fitListRidge)+1),mse_train_r,mse_valid_r)
+  colnames(results)[2:3] <- c(paste(tag,'train'),paste(tag,'valid'))
+  return(results)
+}
+```
+
+```{r}
+results_r <- GetRegResults(0,"r")
+results_l <- GetRegResults(1,"l")
+
+#elastic net
+results_e <- GetRegResults(.8,"e")
+```
+
+```{r}
+results_all <- merge(merge(results,results_r,by="numPred"),results_l,by = "numPred")
+pander(results_all)
+```
+
+```{r}
+results_all <- merge(results_r,results_l,by="numPred")
+
+results_all_long <- gather(results_all,data,mse,"r train":"l valid",factor_key = TRUE)
+  
+ggplot(data=results_all_long, aes(x=numPred, y=mse, colour=data)) +
+    geom_line()
+```
+
+6. Compare your results found in steps 4 and 5. Which method do you think provides a better predictive model? Explain your reasoning.
+
+
+BONUS 1: Prepare the data to be used for _k_ = 5 folds cross-validation **without** the assistance of an R package specifically designed to do so.
+
+BONUS 2: Using k-fold cross validation, calculate both Train MSE and Test MSE for 10 separate models with the degree of polynomial term increasing with each subsequent model. In a single figure, plot MSE (y-axis) vs model degree (x-axis) for both the training and testing sets.
+
+
+```{r}
+n = 1000
+x = rnorm(n)
+datTrain <- get_data(x)
+
+k=10
+
+folds = sample(1:k, nrow(datTrain),replace = TRUE)
+cvTrain <- cvValid <- matrix(NA,k,10, dimnames = list(NULL, paste(1:10)))
+predNames <- colnames(datTrain)[-1]
+for (j in 1:k){
+        for (i in 1:10){
+          
+                fit <- lm(data=datTrain[folds!=j,],formula=as.formula(paste('y~',paste(predNames[1:i],collapse="+"))))
+                cvTrain[j,i] <- GetMSE(datTrain[folds!=j,]$y, predict(fit))
+                cvValid[j,i] <- GetMSE(datTrain[folds==j,]$y, predict(fit,newdata=datTrain[folds==j,]))
+        }
+}
+
+mean.cv.train = apply(cvTrain, 2, mean)
+mean.cv.valid = apply(cvValid, 2, mean)
+plot(mean.cv.train, type="b", main = "Mean CV errors",xlab = "Number of Predictors",
+     ylab="Mean CV Errors")
+points(mean.cv.valid,col ="red")
+lines(mean.cv.valid,col ="red")
+```

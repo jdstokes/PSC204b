@@ -1,0 +1,54 @@
+---
+title: "Week 7"
+output: html_notebook
+---
+
+
+Goodness of fit tests:
+
+AIC vs BIC
+
+Log likelihood
+
+Deviance
+
+Chi squared 
+
+
+
+
+
+Level 1 vs Level 2 predictors
+* anything that changes at level 1
+* anythiing that changes at level 2
+* level 2 are things that are not affecting 
+* some variables are both
+* 
+
+
+
+Functions and packages:
+
+Adding a quadratic effect
+
+triple interaction
+
+all these lower level terms need to be interpreted at the intercept
+
+
+
+Refitting your model with ML (instead of REML)
+
+ML vs REML?
+
+Only variables that change over time as random effects
+
+
+Making it easier for the program to converge, this was discussed
+
+
+
+He mentions the collinearity that can be canceled out between say, X and X^2 through centering...remember this does not necessary change your model fit
+
+
+

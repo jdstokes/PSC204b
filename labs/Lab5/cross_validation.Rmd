@@ -1,0 +1,131 @@
+---
+title: "cross validation"
+output: html_notebook
+---
+
+Overfitting: When the model is trained too well. So the model is super accurate when predicting the training data but less so with new data.
+
+Underfitting: Model does not fit the training data. The model might be too simple or misspecified due to the omission of important variables.
+
+
+Simple cross validation example
+
+```{r}
+###LOADING THE DATA & DATA CHECKING###
+library(dplyr)
+library(leaps)
+library(lars)
+data("diabetes")
+attach(diabetes)
+
+diabetes = data.frame(cbind(diabetes$x, y = diabetes$y))
+head(diabetes)
+str(diabetes)
+summary(diabetes)
+anyNA(diabetes)
+```
+
+```{r}
+#Randomly subset data into Test and Validation
+set.seed(99) 
+n = dim(diabetes)[1]
+randSamp = sample(1:n)
+testInd = randSamp[1:40]
+trainInd = randSamp[41:n]
+dat= diabetes[trainInd,]
+FinalTestDat = diabetes[testInd,]
+
+#Let's check the dimensions
+dim(dat)
+dim(FinalTestDat)
+FinalTestDat$foldNum = 0
+```
+
+We can add a column that will let us easily split our data. We'll also go ahead convert our predictor to numeric
+```{r}
+k <- 4
+n <- dim(dat)[1]
+dat$foldNum <- sample(rep(1:4,length.out = n))
+hist(dat$foldNum)
+```
+
+
+
+This section loops through the data k number of times, splitting data into Train and Test batches, modeling the Train data, predicting for both Train and Test data separately, and then calculating a simple accuracy measure.
+```{r}
+#
+predResults <- data.frame(foldNum=1:k,accTrain=rep(0, k),accTest=rep(0, k))
+
+for(testNum in 1:k){
+ 
+dataTrain <- dat %>%
+  filter(foldNum != testNum)
+
+dataVal <- dat %>%
+  filter(foldNum == testNum)
+
+# 
+fit <- glm(y ~age + sex, data = dataTrain)
+
+predTrain <- predict(fit, newdata=dataTrain)
+predVal <- predict(fit, newdata=dataVal)
+
+
+predResults$accTrain[testNum] = mean((dataTrain$y -predTrain)^2)
+predResults$accTest[testNum] = mean((dataVal$y -predVal)^2)
+}
+```
+
+
+Now, we let's take a look at the mean Prediction and Validation accuracy
+
+```{r}
+RSS = function (predResults){
+
+print(mean(predResults$accTrain))
+print(mean(predResults$accTest))
+}
+
+RSS(predResults)
+```
+
+Let's check our Final test accuracy
+
+```{r}
+predFinalTest <- predict(fit, newdata=FinalTestDat)
+testAcc = mean((FinalTestDat$y -predFinalTest)^2)
+testAcc
+```
+
+
+
+
+```{r}
+###BEST SUBSETS USING 10-FOLD CROSS VALIDATION###
+predict.regsubsets = function(object, newdata, id,...){
+        form=as.formula(object$call[[2]])
+        mat = model.matrix(form, newdata)
+        coefi = coef(object, id=id)
+        xvars = names(coefi)
+        mat[,xvars]%*%coefi
+}
+
+k=10
+set.seed(1306)
+folds = sample(1:k, nrow(dataTrain),replace = TRUE)
+cv.errors = matrix(NA,k,10, dimnames = list(NULL, paste(1:10)))
+
+for (j in 1:k){
+        best.fit = regsubsets(y~. ,data=dataTrain[folds!=j,],nvmax = 10)
+        for (i in 1:10){
+                pred = predict.regsubsets(best.fit, dataTrain[folds==j,], id=i)
+                cv.errors[j,i] = mean((dataTrain$y[folds==j]-pred)^2)
+        }
+}
+
+mean.cv.errors = apply(cv.errors, 2, mean)
+plot(mean.cv.errors, type="b", main = "Mean CV errors",xlab = "Number of Predictors",
+     ylab="Mean CV Errors")
+
+```
+
