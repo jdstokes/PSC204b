@@ -22,20 +22,20 @@ Labs
 - Lab 5
     - Cross validation  [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab5/Lab5.Rmd) [(html notebook)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/labs/Lab5/Lab5.nb.html)
 - Lab 6
-    - Multilevel linear models [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab6/Lab6.Rmd) [(html notebook)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.Rmd) [(R)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.R)
+    - Multilevel linear models [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab6/Lab6.Rmd) [(html notebook)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.nb.html) [(R)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.R)
 - Lab 7
     - Regularization  [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/homework/notebooks/hw5/hw5.Rmd) [(html notebook)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/homework/notebooks/hw5/hw5.nb.html)
 - Lab 8
 
 Homework
 ----
-- HW1
-- HW2
-- HW3
-- HW4
-- HW5
-- HW6
-- HW7
+- HW1 [(word)](/homework/word/HW_week1.docx) [(solutions)](/homework/notebooks/hw1/hw1.Rmd)
+- HW2 [(word)](/homework/word/HW_week2.docx) [(solutions)](/homework/notebooks/hw2/hw2.Rmd)
+- HW3 [(word)](/homework/word/HW_week3.docx) [(solutions)](/homework/notebooks/hw3/hw3.R)
+- HW4 [(word)](/homework/word/HW_week4.docx) [(solutions)](/homework/notebooks/hw4/hw4.R)
+- HW5 [(word)](/homework/word/HW_week5.docx) [(solutions)](/homework/notebooks/hw5/hw5.Rmd)
+- HW6 [(word)](/homework/word/HW_week6.docx) [(solutions)](/homework/notebooks/hw6/hw6.Rmd)
+- HW7 [(word)](/homework/word/HW_week7.docx) [(solutions)](/homework/notebooks/hw7/hw7.Rmd)
 
 Examples
 ----
