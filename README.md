@@ -49,3 +49,5 @@ Lectures
 
 Examples
 ----
+- [Importing data](/tutorials/ImportingData.Rmd)
+- [Diagnostics](/tutorials/diagnostics.Rmd)

@@ -1,7 +1,8 @@
 ---
-title: "R Notebook"
+title: "diagnostics"
 output: html_notebook
 ---
+Note: incomplete
 
 Load data and fit some models  
 ```{r}
@@ -35,17 +36,15 @@ Generate some non-linear data
 #Generate x values from a uniform distribution
 n <- 100
 x <- runif(n, 0, 100)
-beta_0 = 4
-beta_1 = 3
-sigma = 10
-
+beta_0 = 50
+beta_1 = 30
+sigma = 1
 #Add noise
 epsilon = rnorm(n, mean = 0, sd = sigma)
-y = beta_0 + beta_1 * x + epsilon
+y = beta_0 + beta_1 * x^(-0.2) + epsilon
 nonlinear = data.frame(y,x)
 
 plot(x,y)
-
 ```
 
 
@@ -68,7 +67,7 @@ fit_non <-  lm(y ~ x, nonlinear)
 
 View four diagnostic plots
 ```{r}
-plot(fit)
+plot(fit_linear)
 ```
 
 Access Help page for lm() plot diagnostics
@@ -79,7 +78,7 @@ Access Help page for lm() plot diagnostics
 View all four plots as once
 ```{r}
 par(mfrow=c(2,2))
-plot(fit)
+plot(fit_linear)
 ```
 
 
