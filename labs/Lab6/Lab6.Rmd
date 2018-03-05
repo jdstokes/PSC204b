@@ -3,7 +3,7 @@ title: "Lab 6"
 output: html_notebook
 ---
 
-## Discrete predictive simulation
+### Discrete predictive simulation
 ```{r}
 # We know that the probability of that a baby is
 # born a girl is 48.8%
@@ -89,8 +89,6 @@ for (s in 1:n.sims){
 summary(n.girls)
 sd(n.girls)
 hist(n.girls)
-
-
 ```
 
 Continuoous Predictive Simulation 
@@ -162,7 +160,7 @@ avg.height = replicate(1000,
 hist(avg.height)
 ```
 
-## MULTILEVEL LINEAR MODELS IN R
+## Multilevel linear models in R
 ```{r}
 wisc = read.csv('../../data/wisc3raw.csv', header = T)
 head(wisc)
@@ -239,9 +237,16 @@ summary(nullmod)
 Intraclass correlation coefficient (ICC)  
 
 $p_{ic} = \frac{d_{11}}{d_{11}+\sigma^2}$
+
+ICC ranges from 0 to 1.  
+
+High ICC would indicate "high similarity between values from the same group"
+
 ```{r}
 # ICC
-29.65 / (29.65 + 230.92) # About 11% of variance
+# Variance for Individual divided by total variaance ( Id variance + residual variance)
+
+29.65 / (29.65 + 230.92) # About 11% of variance in performanc
                          # due to differences 
                          # between individuals
 
@@ -250,7 +255,23 @@ $p_{ic} = \frac{d_{11}}{d_{11}+\sigma^2}$
                           # within individuals
 ```
 
+```{r}
+library(psych)
+ICC(wisc[,c('perfo1', 'perfo2', 'perfo4', 'perfo6')])
+```
 
+Plot subjects 1-10
+```{r}
+long %>%
+  filter(id < 11) %>%
+  ggplot(aes(y = perform, x = factor(id), colour = factor(id))) +
+  geom_point() +
+  theme(legend.position="none") + 
+  xlab("Subject ID") + 
+  ylab("Performance")
+```
+
+```{r}
 # Next, fit the unconditional linear growth
 # model.
 
@@ -260,9 +281,9 @@ $p_{ic} = \frac{d_{11}}{d_{11}+\sigma^2}$
 mod0 = lmer(perform ~ time_c + (time_c | id), 
             data = long)
 summary(mod0)
+```
 
-
-
+```{r}
 # Adding time-invariant individual-level covariate
 
 # If we were to leave mother's education in its raw
@@ -292,18 +313,21 @@ mod1 = lmer(perform ~ time + momed_gm +
             (time | id), 
             data = long)
 summary(mod1)
+```
 
+```{r}
 # Random slope for time and momed only
 mod2 = lmer(perform ~ time + momed_gm + 
             (time + momed_gm| id), 
             data = long)
 summary(mod2)
+```
 
-
+```{r}
 # Compare AICs:
 AIC(nullmod); AIC(mod0); AIC(mod1); AIC(mod2)
-
-
+```
+```{r}
 # You could then consider adding additional predictors
 # in your model to help further reduce the residual
 # variance in your model
@@ -315,8 +339,9 @@ plot(data = long, perform ~ time, type = 'n',
      xlab = 'Grade', 
      ylab = "WISC Performance",
      main = "Variability in Slope and Intercepts- Individual")
+```
 
-
+```{r}
 fix = fixef(mod1)
 rand = ranef(mod1)
 parmsIndiv = cbind((rand$id[1] + fix[1]), (rand$id[2] + fix[2]))
@@ -334,5 +359,4 @@ for(i in 1:length(unique(long$id))){
 
 # Adding mean trajectory
 abline(a = fix[1], b = fix[2], lwd = 2,col = 'red')
-
 ```

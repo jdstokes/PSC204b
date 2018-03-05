@@ -2,7 +2,7 @@
 title: "Homework 5"
 output: html_notebook
 ---
-Packages and random seed
+
 ```{r}
 library(ggplot2)
 library(dplyr)

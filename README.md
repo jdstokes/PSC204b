@@ -17,6 +17,7 @@ Labs
 - Lab 4
 - Lab 5
 - Lab 6
+    - Multilevel linear models [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/lab6/Lab6.Rmd) [(html notebook)](https://github.com/jdstokes/PSC204b/blob/master/labs/lab6/Lab6.Rmd) [(R)](https://github.com/jdstokes/PSC204b/blob/master/labs/lab6/Lab6.R)
 - Lab 7
 - Lab 8
 
