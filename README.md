@@ -10,7 +10,7 @@ Table of contents
 Labs
 ----
 - Lab 1
-     - Dataframe warmup [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab1.Rmd) [(markdown)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab1.Rmd)
+     - Dataframe warmup [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab1/Lab1.Rmd) [(markdown)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab1/Lab1.Rmd)
      - Homework review [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/homework/notebooks/hw1/hw1.Rmd) [(markdown)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/homework/notebooks/hw1/hw1.nb.html)
 
 - Lab 2
