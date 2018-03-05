@@ -13,7 +13,9 @@ Labs
      - Homework review [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/homework/notebooks/homework1.Rmd) [(markdown)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/homework/notebooks/homework1.nb.html)
 
 - Lab 2
+    - Violation of assumptions [(R)](/labs/Lab2/Lab2.R) 
 - Lab 3
+    - Logistic regression [(raw notebook)](/labs/Lab2/Lab2.Rmd) [(R)](/labs/Lab2/Lab2.R) [(html notebook)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab2/Lab2.Rmd)
 - Lab 4
 - Lab 5
 - Lab 6
