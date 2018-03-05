@@ -197,8 +197,7 @@ anova(fit.ses_group_b,fit.ses,fit.ses_group_unc)
 library(lmerTest)
 summary(fit.ses_group)
 # The SES fixed effect suggests that a one unit increase in SES from the school averages would predict a 2.19 increase in math achievement. 
-# Fixed effect intercept represents the predicted average math score when SES is set to zero.
-# School intercepts represent predicted math score value added to the mean from for each school.
+# Fixed effect intercept represents the predicted average math score.
 
 # Extra credit
 hsb$size = scale(hsb$size,scale=FALSE)
