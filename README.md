@@ -36,5 +36,16 @@ Homework
 - HW5 [(word)](/homework/word/HW_week5.docx) [(solutions)](/homework/notebooks/hw5/hw5.Rmd)
 - HW6 [(word)](/homework/word/HW_week7.docx) [(solutions)](/homework/notebooks/hw6/hw6.Rmd)
 
+Lectures
+----
+- Week 1 [(slides)](/lectures/week1/PSC204B_2018_w1.pdf)
+- Week 2 [(slides)](/lectures/week2/PSC204B_2018_w2.pdf)
+- Week 3 [(slides)](/lectures/week3/PSC204B_2018_w3.pdf)
+- Week 4 [(slides)](/lectures/week4/PSC204B_2018_w4.pdf)
+- Week 5 [(slides)](/lectures/week5/PSC204B_2018_w5.pdf)
+- Week 6 [(slides)](/lectures/week6/PSC204B_2018_w6.pdf)
+- Week 7 [(slides)](/lectures/week7/PSC204B_2018_w7.pdf)
+- Week 8 [(slides)](/lectures/week8/PSC204B_2018_w8.pdf)
+
 Examples
 ----
