@@ -5,6 +5,7 @@ Table of contents
 - [Homework](#homework)
 - [Lectures](#lectures)
 - [Resources](#resources)
+- [Examples](#examples)
 
 Labs
 ----
@@ -15,12 +16,15 @@ Labs
 - Lab 2
     - Violation of assumptions [(R)](/labs/Lab2/Lab2.R) 
 - Lab 3
-    - Logistic regression [(raw notebook)](/labs/Lab2/Lab2.Rmd) [(R)](/labs/Lab2/Lab2.R) [(html notebook)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab2/Lab2.Rmd)
+    - Intro to logistic regression [(notebook)](/labs/Lab2/Lab2.Rmd) [(R)](/labs/Lab2/Lab2.R)
 - Lab 4
+    - Logistic regression with titanic data [(R)](/labs/Lab4/Lab4.R)
 - Lab 5
+    - Cross validation  [(notebook)](/labs/Lab5/Lab5.Rmd)
 - Lab 6
     - Multilevel linear models [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab6/Lab6.Rmd) [(html notebook)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.Rmd) [(R)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab6/Lab6.R)
 - Lab 7
+    - Regularization  [(notebook)](/homework/notebooks/hw5/hw5.Rmd)
 - Lab 8
 
 Homework
@@ -31,4 +35,7 @@ Homework
 - HW4
 - HW5
 - HW6
-- HW7 
+- HW7
+
+Examples
+----

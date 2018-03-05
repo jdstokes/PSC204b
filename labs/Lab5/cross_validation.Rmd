@@ -97,9 +97,6 @@ testAcc = mean((FinalTestDat$y -predFinalTest)^2)
 testAcc
 ```
 
-
-
-
 ```{r}
 ###BEST SUBSETS USING 10-FOLD CROSS VALIDATION###
 predict.regsubsets = function(object, newdata, id,...){
@@ -128,4 +125,3 @@ plot(mean.cv.errors, type="b", main = "Mean CV errors",xlab = "Number of Predict
      ylab="Mean CV Errors")
 
 ```
-
