@@ -1,0 +1,32 @@
+---
+title: "Homework 6"
+output: html_notebook
+---
+
+1.	Select 50 students at random from the larger dataset and plot their math achievement scores against student level socioeconomic status (SES).
+
+
+
+2.	Compute and interpret the intraclass correlation coefficient (ICC) for student’s math achievement.
+
+
+
+3.	Write out the multilevel equations for the null model, a random intercept model using SES as a predictor, and a random slopes model using SES as predictor.
+
+
+Fixed effects
+$y_{ij}=\beta_{0} + \beta_{1}x_{j} + \epsilon_{j} $
+
+Random intercept
+$y_{ij}=\beta_{0i} + \beta_{1}x_{ij} + u_i + \epsilon_{ij} $
+
+Random slopes
+$y_{ij}=\beta_{0i} + \beta_{1}x_{ij} + u_i + v_ix_{ij} + \epsilon_{ij} $
+
+4.	Fit the null model, random intercept model using SES as a predictor, and random slopes model using SES as a predictor. Use AIC values to determine the best model. 
+
+5.	Re-run your selected model twice—once using grand-mean centered values of SES, and another using group-mean centered values of SES. Compare the results from these two models.
+
+6.	Interpret the parameter estimates from the group-mean centered analysis you conducted in 5.
+
+BONUS: Choose a school-level predictor within the hsb dataset to add to your model. Use this predictor to test an interaction with the student-level predictor 

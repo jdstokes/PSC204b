@@ -34,7 +34,7 @@ Homework
 - HW3 [(word)](/homework/word/HW_week3.docx) [(solutions)](/homework/notebooks/hw3/hw3.R)
 - HW4 [(word)](/homework/word/HW_week4.docx) [(solutions)](/homework/notebooks/hw4/hw4.R)
 - HW5 [(word)](/homework/word/HW_week5.docx) [(solutions)](/homework/notebooks/hw5/hw5.Rmd)
-- HW6 [(word)](/homework/word/HW_week7.docx) [(solutions)](/homework/notebooks/hw6/hw6.Rmd)
+- HW6 [(word)](/homework/word/HW_week7.docx) [(solutions)](/homework/notebooks/hw6/hw6.R)
 
 Lectures
 ----
