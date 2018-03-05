@@ -143,7 +143,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("cross_validation.Rmd");
+  window.initializeSourceEmbed("Lab5.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
@@ -201,10 +201,17 @@ library(lars)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiTG9hZGVkIGxhcnMgMS4yXG4ifQ== -->
 <pre><code>Loaded lars 1.2</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcImRpYWJldGVzXCIpXG5hdHRhY2goZGlhYmV0ZXMpXG5kaWFiZXRlcyA9IGRhdGEuZnJhbWUoY2JpbmQoZGlhYmV0ZXMkeCwgeSA9IGRpYWJldGVzJHkpKVxuaGVhZChkaWFiZXRlcylcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcImRpYWJldGVzXCIpXG5hdHRhY2goZGlhYmV0ZXMpXG5gYGAifQ== -->
 <pre class="r"><code>data(&quot;diabetes&quot;)
-attach(diabetes)
-diabetes = data.frame(cbind(diabetes$x, y = diabetes$y))
+attach(diabetes)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgX2J5XyAuR2xvYmFsRW52OlxuXG4gICAgeCwgeVxuIn0= -->
+<pre><code>The following objects are masked _by_ .GlobalEnv:
+
+    x, y</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGlhYmV0ZXMgPSBkYXRhLmZyYW1lKGNiaW5kKGRpYWJldGVzJHgsIHkgPSBkaWFiZXRlcyR5KSlcbmhlYWQoZGlhYmV0ZXMpXG5gYGAifQ== -->
+<pre class="r"><code>diabetes = data.frame(cbind(diabetes$x, y = diabetes$y))
 head(diabetes)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MTEsIm5yb3ciOjZ9LCJyZGYiOiJINHNJQUFBQUFBQUFBd3R5aVREaWl1QmlZR0JnWW1CbVlXWmdZZ1l5V1ppQUJDTURDd01uaUs1Z1lHQVdCaks0Z1pnUGlObnNGOWV0enp3ZDVMOC83dXIrMi8rY1BleTNYbFBUZVh2MDQvNXRaNjVvbjkzQmJWL0cwK09pSWRHNGYvdXVKN3pMdm9iQjlhMzh0RyttMlArcS9jdHV1eHhjYzJRT09oK2RodXRiUDIycDFzVDNVZnRYUloxN2JIbDlxZjJ5US83bUVtdUs5N2Z2VjJnNHV2bkMva1VMbWRmcDc1WGJ2K1NhcERZZjcxVzR2bW1wVzU3MkcwN2JQK3ZyZXBId1NUbjd5NjBFM2tsZmxkcS82TWdpaC9nUDlYRDV5UzhXbkJIaTJBclR0My9aa3JLNHA1YmQreHQ5Si9ReDJsVHNYeDV4ZnYybno2ZnNPNzdIRlpwbFJkc1h5UDVkZi9QRm5mMGJWOFp6dk5QNEQ5ZTM4QXJiYXd1Tjcvc256Ky85eG5CazVmNkZqZThmemdteHNwODVYU25rY2thcGZmK0hlNWtLWC9UM2IvRXg5ZG9oOGhsaG44V2luY2w1SXZhYmVSWTkwcHpoc1gvQmhDOXZaL21iN2w5VTNHTFl3YUpsMzdEbTlMZkN1NzcyUzVWc0VyNWYvZ2pYbDJvVEo2QitkdVArSlJaVjdGdDZSR0I4KzRVVDNybXVueFFIbDkvY04xM2MySGM1UEZ5bUpOMXZDbGpYdDM5akhkODlNMFlGKy9UU3crTFNXYnZzcDl0TXZtMCtJWFQvZ2tTOXd6MEhUdTVmS2pvajM1WUZFUzZUQkM5bjNwejZaLy8yV2VzZHQreFIyVCtydDNyNm5uVE4vYzA2WWVWdk8rZnRYLzR3Z05WeUo4LytIYXRVM0F2RlBHSDZISkllTUlDQVE5QUJDSjI0QUVKblF2a0pVUGtJQndZSVFFbUFySG1KdWFuRlFJWUFPQkZDQkprVDAxTmh6T0xVQ2hnektUY1R4c3hOTElBeW1VcVNZWUk1S1Rrd1pnYUNXWktjQVZkUWtnNWpwdWVVd3JKQUpacVRPSXZ5eS9WZ3p1SUZXZEVBY1RnYnV0dVRjeEtMWVc2SENYS2xKSllrNnFVVkFmVURlZi9RdExEbkY1Ums1dWNCTlRHQmNoMHJtbWJHSWpRQi90SThrRXRTZEpNelN2T3lkUTFCRm9DbElaZ1hTck1oc2JraFZqTDloeHJGQ2pXS0xUVXZQVE1QRnE2c09ZbEpxYkF3NGdQNkdPeGh2WUtpekx3U21FK0Fvc1Y2SmZrbGlUQjFYTW41T1RBUnNOOFkvZ0VBSUpnSUlHTUVBQUE9In0= -->
