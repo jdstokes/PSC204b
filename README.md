@@ -51,3 +51,7 @@ Examples
 ----
 - [Importing data](/tutorials/ImportingData.Rmd)
 - [Diagnostics](/tutorials/diagnostics.Rmd)
+
+Restources
+----
+- [Mixed models](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
