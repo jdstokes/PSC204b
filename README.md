@@ -1,3 +1,6 @@
+# Coursework for UC Davis PSC204b
+
+
 Table of contents
 -----------------
 
@@ -7,8 +10,7 @@ Table of contents
 - [Resources](#resources)
 - [Examples](#examples)
 
-Labs
-----
+## Labs
 - Lab 1
      - Dataframe warmup [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/labs/Lab1/Lab1.Rmd) [(markdown)](https://github.com/jdstokes/PSC204b/blob/master/labs/Lab1/Lab1.Rmd)
      - Homework review [(raw)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/homework/notebooks/hw1/hw1.Rmd) [(markdown)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/homework/notebooks/hw1/hw1.nb.html)
@@ -27,8 +29,7 @@ Labs
     - Regularization  [(raw notebook)](https://raw.githubusercontent.com/jdstokes/PSC204b/master/homework/notebooks/hw5/hw5.Rmd) [(html notebook)](http://htmlpreview.github.io/?https://github.com/jdstokes/PSC204b/blob/master/homework/notebooks/hw5/hw5.nb.html)
 - Lab 8
 
-Homework
-----
+## Homework
 - HW1 [(word)](/homework/word/HW_week1.docx) [(solutions)](/homework/notebooks/hw1/hw1.Rmd)
 - HW2 [(word)](/homework/word/HW_week2.docx) [(solutions)](/homework/notebooks/hw2/hw2.Rmd)
 - HW3 [(word)](/homework/word/HW_week3.docx) [(solutions)](/homework/notebooks/hw3/hw3.R)
@@ -36,22 +37,22 @@ Homework
 - HW5 [(word)](/homework/word/HW_week5.docx) [(solutions)](/homework/notebooks/hw5/hw5.Rmd)
 - HW6 [(word)](/homework/word/HW_week7.docx) [(solutions)](/homework/notebooks/hw6/hw6.R)
 
-Lectures
-----
-- Week 1 [(slides)](/lectures/week1/PSC204B_2018_w1.pdf)
-- Week 2 [(slides)](/lectures/week2/PSC204B_2018_w2.pdf)
-- Week 3 [(slides)](/lectures/week3/PSC204B_2018_w3.pdf)
-- Week 4 [(slides)](/lectures/week4/PSC204B_2018_w4.pdf)
-- Week 5 [(slides)](/lectures/week5/PSC204B_2018_w5.pdf)
-- Week 6 [(slides)](/lectures/week6/PSC204B_2018_w6.pdf)
-- Week 7 [(slides)](/lectures/week7/PSC204B_2018_w7.pdf)
-- Week 8 [(slides)](/lectures/week8/PSC204B_2018_w8.pdf)
+## Lectures
+- Week 1 [Linear Regression](/lectures/week1/PSC204B_2018_w1.pdf)
+- Week 2 [Multiple Regression](/lectures/week2/PSC204B_2018_w2.pdf)
+- Week 3 [Violations of Assumptions](/lectures/week3/PSC204B_2018_w3.pdf)
+- Week 4 [Logistic Regression and GLM](/lectures/week4/PSC204B_2018_w4.pdf)
+- Week 5 [Model comparison, Over-fitting, Information Criteria](/lectures/week5/PSC204B_2018_w5.pdf)
+- Week 6 [Regression inverence via simulations](/lectures/week6/PSC204B_2018_w6.pdf)
+- Week 7 [Multilevel Linear Models](/lectures/week7/PSC204B_2018_w7.pdf)
+- Week 8 [Multilevel Models](/lectures/week8/PSC204B_2018_w8.pdf)
+- Week 8 [Multilevel Models and Bayesian Inference](/lectures/week9/PSC204B_2018_w9.pdf)
 
-Examples
+## Examples
 ----
 - [Importing data](/tutorials/ImportingData.Rmd)
 - [Diagnostics](/tutorials/diagnostics.Rmd)
 
-Restources
+## Resources
 ----
 - [Mixed models](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
