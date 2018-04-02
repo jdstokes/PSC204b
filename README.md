@@ -1,4 +1,4 @@
-# Coursework for UC Davis PSC204b
+# Coursework for UC Davis PSC204b  
 
 
 Table of contents
@@ -46,7 +46,7 @@ Table of contents
 - Week 6 [Regression inverence via simulations](/lectures/week6/PSC204B_2018_w6.pdf)
 - Week 7 [Multilevel Linear Models](/lectures/week7/PSC204B_2018_w7.pdf)
 - Week 8 [Multilevel Models](/lectures/week8/PSC204B_2018_w8.pdf)
-- Week 8 [Multilevel Models and Bayesian Inference](/lectures/week9/PSC204B_2018_w9.pdf)
+- Week 9 [Multilevel Models and Bayesian Inference](/lectures/week9/PSC204B_2018_w9.pdf)
 
 ## Examples
 ----

@@ -1,0 +1,39 @@
+---
+title: "R code chunks"
+output:
+  html_notebook:
+    highlight: tango
+    mathjax: null
+    number_sections: yes
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+    smooth_scroll: yes
+    collapsed: yes
+---
+**Examples taken from https://rmarkdown.rstudio.com/authoring_rcodechunks.html**
+
+Output included
+```{r}
+summary(cars)
+```
+To display the output of a code chunk but not the underlying R code, you specify the echo=FALSE option:
+```{r, echo=FALSE}
+summary(cars)
+```
+To display a plot while omitting the code used to generate the plot you’d do this:
+```{r, echo=FALSE}
+plot(cars)
+```
+To display R code without evaluating it, you specify the eval=FALSE chunk option:
+```{r,eval=FALSE}
+summary(cars)
+```
+## Table output 
+```{r, results='asis'}
+knitr::kable(mtcars)
+```
+
+Note the use of the results='asis' chunk option. This is required to ensure that the raw table output isn’t processed furthur by knitr. The kable function includes several options to control the maximum number of digits for numeric columns, alignment, etc (refer to the knitr package documentation for additional details).
+
+

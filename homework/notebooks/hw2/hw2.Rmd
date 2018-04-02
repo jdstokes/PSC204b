@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_notebook: default
+  pdf_document: default
 ---
 
 [Question 1](#question-1)  
@@ -243,7 +245,7 @@ a)	Fit a regression of child test scores on mother’s age, display the data and
 ```{r}
 model<-lm(data=data.child,formula=ppvt~momage)
 summary(model)
-PlotSimple(y=data.child$ppvt,x=data.child$momage)
+# PlotSimple(y=data.child$ppvt,x=data.child$momage)
 
 ```
 

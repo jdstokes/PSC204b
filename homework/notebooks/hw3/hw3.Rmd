@@ -170,8 +170,7 @@ fpath <- file.path(dir.data,"spline.dat")
 spline_data <- read.table(fpath,header = TRUE)
 spline_data %>% 
   ggplot(aes(y=y,x= x)) +
-  geom_point() +
-  theme_base()
+  geom_point()
 ```
 
 simple
